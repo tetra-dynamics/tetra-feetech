@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tetra-feetech"
+version = "0.1.0"
+description = "A more ergonomic wrapper for the feetech Python SDK"
+readme = "README.md"
+authors = [{ name = "Brian Smith", email = "brian@tetradynamics.ai" }]
+license = { file = "LICENSE" }
+dependencies = [
+    "feetech-servo-sdk"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/tetra-dynamics/tetra-feetech"
+"Repository" = "https://github.com/tetra-dynamics/tetra-feetech"
