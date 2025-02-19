@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tetra-feetech"
-version = "0.1.0"
+version = "0.1.1"
 description = "A more ergonomic wrapper for the feetech Python SDK"
 readme = "README.md"
 authors = [{ name = "Brian Smith", email = "brian@tetradynamics.ai" }]

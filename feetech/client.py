@@ -7,6 +7,7 @@ from scservo_sdk import PortHandler, PacketHandler, COMM_SUCCESS
 class Register(enum.Enum):
     ID = 5
     MaxTorque = 16
+    PositionCorrection = 31
     TorqueEnable = 40
     GoalPosition = 42
     TorqueLimit = 48
@@ -18,6 +19,7 @@ class Register(enum.Enum):
 
 multibyte_registers = {
     Register.MaxTorque,
+    Register.PositionCorrection,
     Register.TorqueEnable,
     Register.GoalPosition,
     Register.TorqueLimit,
@@ -52,6 +54,20 @@ class Client:
         self.write_register(old_id, Register.WriteLock, 0)
         self.write_register(old_id, Register.ID, new_id)
         self.write_register(new_id, Register.WriteLock, 1)
+
+    def zero_motor(self, motor_id: int):
+        self.write_register(motor_id, Register.PositionCorrection, 0)
+        pos = self.read_register(motor_id, Register.PresentPosition)
+
+        new_offset = 0
+        if pos <= 2047:
+            new_offset = pos
+        else:
+            new_offset = 2048 + 4096 - pos
+
+        self.write_register(motor_id, Register.WriteLock, 0)
+        self.write_register(motor_id, Register.PositionCorrection, new_offset)
+        self.write_register(motor_id, Register.WriteLock, 1)
 
     def enable(self, motor_id: int):
         self.write_register(motor_id, Register.TorqueEnable, 1)
